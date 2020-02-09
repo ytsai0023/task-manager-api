@@ -49,8 +49,7 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-/*** middelware */
-
+ 
 //not async arrow function 
 userSchema.methods.generateAuthToken = async function(){
     const user = this
