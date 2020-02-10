@@ -53,10 +53,28 @@ const userSchema = new mongoose.Schema({
 //not async arrow function 
 userSchema.methods.generateAuthToken = async function(){
     const user = this
-    const token = await jwt.sign({_id:user._id.toString()},'thisismycourse')
-    user.tokens = user.tokens.concat({token})
-    await user.save()
-    return token
+    try{
+        const token = await jwt.sign({_id:user._id.toString()},'thisismycourse')
+        user.tokens = user.tokens.concat({token})
+         await user.save()
+        return token
+    }catch(e){
+
+        throw Error('Failed to access token ')
+    }
+   
+}
+
+userSchema.methods.getPublicProfile = function(){
+   const user = this
+   const userObject = user.toObject()
+   delete userObject.password
+   delete userObject.tokens
+ 
+   
+   return userObject
+
+  
 }
 
 
