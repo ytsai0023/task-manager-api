@@ -49,7 +49,13 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
- 
+//virtual property
+userSchema.virtual('tasks',{
+    ref:'Task',
+    localField:'_id',
+    foreignField:'owner'
+}) 
+
 //not async arrow function 
 userSchema.methods.generateAuthToken = async function(){
     const user = this
